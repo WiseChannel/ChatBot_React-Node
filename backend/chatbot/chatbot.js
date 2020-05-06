@@ -3,7 +3,14 @@ const structjson = require('./structjson')
 const config = require('../config/config')
 const sessionClient = new dialogFlow.SessionsClient();
 
-const sessionPath = sessionClient.sessionPath(config.dialogFlowSessionID, config.googleProjectID)
+const projectID = config.googleProjectID
+
+const credentials = {
+    client_email: config.googleClientEmail,
+    private_key: config.googlePrivetKey
+}
+
+const sessionPath = sessionClient({ projectID, credentials })
 
 
 module.exports = {
