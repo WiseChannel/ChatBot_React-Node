@@ -1,4 +1,5 @@
 const dialogFlow = require('dialogflow')
+const structjson = require('./structjson')
 const config = require('../config/config')
 const sessionClient = new dialogFlow.SessionsClient();
 
@@ -6,19 +7,15 @@ const sessionPath = sessionClient.sessionPath(config.dialogFlowSessionID, config
 
 
 module.exports = {
-    textQuery: async (text, paramaters = {}) => {
+    eventQuery: async (event, paramaters = {}) => {
         let self = module.exports
         const request = {
             session: sessionPath,
             queryInput: {
-                text: {
-                    text: req.body.text,
+                event: {
+                    name: event,
+                    paramaters: structjson.jsonToStructProto(paramaters),
                     languageCode: config.dialogFlowSessionLanguageCode
-                }
-            },
-            queryParams: {
-                payload: {
-                    data: paramaters
                 }
             }
         }

@@ -10,7 +10,8 @@ module.exports = app => {
         res.send(response[0].queryResult)
     })
 
-    app.set('/api/df_event_query', (req,res) => {
+    app.set('/api/df_event_query', async (req,res) => {
+        let response = await chatbot.eventQuery(req.body.event, req.body.parameters)
         res.send({'name': 'event query'})
     })
 }
