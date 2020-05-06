@@ -9,7 +9,7 @@ module.exports = app => {
         res.send({'hello': 'there'})
     })
 
-    app.set('/api/df_text_query', (req,res) => {
+    app.set('/api/df_text_query', async (req,res) => {
 
         const request = {
             session: sessionPath,
@@ -20,20 +20,10 @@ module.exports = app => {
                 }
             }
         }
-        sessionClient.detectIntent(request)
-            .then(response => {
-                const result = response[0].queryResult
-                if (result.intent) {
-                    console.log(`Internet: ${result.intent.displayName}`)
-                } else {
-                    console.log('No intent')
-                }
-            })
-            .catch(err => {
-                console.log('Err: ', err)
-            })
+        let response = await sessionClient
+            .detectIntent(request)
 
-        res.send({'name': 'text query'})
+        res.send(response[0].queryResult)
     })
 
     app.set('/api/df_event_query', (req,res) => {
