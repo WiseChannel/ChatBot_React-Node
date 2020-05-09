@@ -1,13 +1,13 @@
 import React from 'react';
 import  { BrowserRouter as Router, Route } from 'react-router-dom'
 
-//import components
+//import component
 import './App.css';
-import Header from './components/pages/Header'
-import Landing from './components/pages/Landing'
-import About from './components/pages/About'
-import Shop from './components/shop/Shop'
-import ChatBot from './components/chatbot/ChatBot'
+import Header from './component/pages/Header'
+import Landing from './component/pages/Landing'
+import About from './component/pages/About'
+import Shop from './component/shop/Shop'
+import ChatBot from './component/chatbot/ChatBot'
 
 const App = () => {
   return (
