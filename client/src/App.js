@@ -13,7 +13,7 @@ const App = () => {
   return (
     <div className="App">
       <Router>
-        <div>
+        <div className='container'>
           <Header />
           <Route exact path='/' component={Landing} />
           <Route path='/about' component={About} />
