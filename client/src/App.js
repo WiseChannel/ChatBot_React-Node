@@ -1,10 +1,26 @@
 import React from 'react';
-import './App.css';
+import  { BrowserRouter as Router, Route } from 'react-router-dom'
 
-const App =() => {
+//import components
+import './App.css';
+import Header from './components/pages/Header'
+import Landing from './components/pages/Landing'
+import About from './components/pages/About'
+import Shop from './components/shop/Shop'
+import ChatBot from './components/chatbot/ChatBot'
+
+const App = () => {
   return (
     <div className="App">
-      lorem
+      <Router>
+        <div>
+          <Header />
+          <Route exact path='/' component={Landing} />
+          <Route path='/about' component={About} />
+          <Route path='/shop' component={Shop} />
+          <ChatBot />
+        </div>
+      </Router>
     </div>
   );
 }
