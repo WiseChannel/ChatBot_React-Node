@@ -9,6 +9,7 @@ class ChatBot extends Component {
     constructor(props) {
         super(props);
 
+        this._handleInputKeyPress = this._handleInputKeyPress.bind(this)
         this.state = {
             messages: [],
         }
@@ -48,6 +49,10 @@ class ChatBot extends Component {
         }
     }
 
+    componentDidMount() {
+        this.df_event_event('Welcome in chat')
+    }
+
     renderMessage(stateMessages) {
         if (stateMessages) {
             return stateMessages.map((message, i) => {
@@ -62,13 +67,25 @@ class ChatBot extends Component {
         }
     }
 
+    _handleInputKeyPress(e) {
+        e.preventDefult()
+
+        if(e.key === 'Enter') {
+            this.df_text_query(e.target.value)
+            e.target.value = ''
+        }
+    }
+
     render() {
         return (
             <div style={{ height: 400, width: 400, float: 'right' }}>
                 <div id='chatbot' style={{ height: '100%', width: '100%', overflow: 'auto'}}>
                     <h2>ChatBot</h2>
                     {this.renderMessage(this.state.message)}
-                    <input type='text'/>
+                    <input 
+                        type='text'
+                        onKeyPress={this._handleInputKeyPress}
+                    />
                 </div>
             </div>
         )
