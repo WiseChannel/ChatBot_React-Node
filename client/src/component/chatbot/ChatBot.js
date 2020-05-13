@@ -5,7 +5,7 @@ import Axios from "axios";
 import Message from "./Message";
 
 class ChatBot extends Component {
-
+    messageEnd;
     constructor(props) {
         super(props);
 
@@ -53,6 +53,10 @@ class ChatBot extends Component {
         this.df_event_event('Welcome in chat')
     }
 
+    componentDidUpdate() {
+        this.messageEnd.scrollIntoView({ behavior: 'smoth' })
+    }
+
     renderMessage(stateMessages) {
         if (stateMessages) {
             return stateMessages.map((message, i) => {
@@ -82,6 +86,11 @@ class ChatBot extends Component {
                 <div id='chatbot' style={{ height: '100%', width: '100%', overflow: 'auto'}}>
                     <h2>ChatBot</h2>
                     {this.renderMessage(this.state.message)}
+                    <div 
+                        style={{ float: 'left', clear: 'both' }}
+                        ref={el => {this.messageEnd = el}}
+                        >
+                        </div>
                     <input 
                         type='text'
                         onKeyPress={this._handleInputKeyPress}
