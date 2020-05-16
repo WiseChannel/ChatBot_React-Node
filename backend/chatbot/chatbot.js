@@ -10,11 +10,10 @@ const credentials = {
     private_key: config.googlePrivetKey
 }
 
-const sessionPath = sessionClient({ projectID, credentials })
-
 
 module.exports = {
     eventQuery: async (event, paramaters = {}) => {
+        let sessionPath = sessionClient.sessionPath( projectID, sessionId + userID )
         let self = module.exports
         const request = {
             session: sessionPath,

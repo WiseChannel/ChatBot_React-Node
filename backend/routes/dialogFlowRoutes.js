@@ -6,12 +6,12 @@ module.exports = app => {
     })
 
     app.set('/api/df_text_query', async (req,res) => {
-        let response = await chatbot.textQuery(req.body.text, req.body.parameters)
+        let response = await chatbot.textQuery(req.body.userID, req.body.parameters)
         res.send(response[0].queryResult)
     })
 
     app.set('/api/df_event_query', async (req,res) => {
-        let response = await chatbot.eventQuery(req.body.event, req.body.parameters)
+        let response = await chatbot.eventQuery(req.body.userID, req.body.parameters)
         res.send({'name': 'event query'})
     })
 }

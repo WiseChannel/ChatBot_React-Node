@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import Axios from "axios";
+import Cookies from 'universal-cookie'
+import { v4 as uuid } from 'uuid'
 
 //import components
 import Message from "./Message";
+
+const cookies = new Cookies();
 
 class ChatBot extends Component {
     messageEnd;
@@ -12,6 +16,9 @@ class ChatBot extends Component {
         this._handleInputKeyPress = this._handleInputKeyPress.bind(this)
         this.state = {
             messages: [],
+        }
+        if(cookies.get('userID') === 'undefined') {
+            cookies.set('userID', uuid(), {path: '/'});
         }
     }
 
@@ -26,7 +33,7 @@ class ChatBot extends Component {
         }
 
         this.setState({messages: [...this.state.messages, says]})
-        const res = await Axios.post('/api/df_text_query', {text})
+        const res = await Axios.post('/api/df_text_query', {text: queryText, userID: cookies.get('userID')})
 
         for(let msg of res.data.fulfilmentMessages) {
             says = {
@@ -38,7 +45,7 @@ class ChatBot extends Component {
     }
 
     async df_event_event(event) {
-        const res = await Axios.post('/api/df_event_event', {event})
+        const res = await Axios.post('/api/df_event_event', {event: eventName, userID: cookies.get('userID')})
 
         for(let msg of res.data.fulfilmentMessages) {
             let says = {
@@ -86,12 +93,12 @@ class ChatBot extends Component {
                 <div id='chatbot' style={{ height: '100%', width: '100%', overflow: 'auto'}}>
                     <h2>ChatBot</h2>
                     {this.renderMessage(this.state.message)}
-                    <div 
+                    <div
                         style={{ float: 'left', clear: 'both' }}
                         ref={el => {this.messageEnd = el}}
                         >
                         </div>
-                    <input 
+                    <input
                         type='text'
                         onKeyPress={this._handleInputKeyPress}
                     />
